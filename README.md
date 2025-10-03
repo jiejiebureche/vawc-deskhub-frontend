@@ -1,1 +1,0 @@
-# vawc-deskhub-frontend
