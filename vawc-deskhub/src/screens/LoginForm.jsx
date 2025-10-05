@@ -2,17 +2,17 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useLogin } from "../hooks/useLogin";
 
 function LoginForm() {
   const [contact_num, setContactNum] = useState("");
   const [password, setUserPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { login, error, isLoading } = useLogin();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    setLoading(true);
     e.preventDefault();
-    //fetch data code here here
+    await login(contact_num, password);
   };
 
   return (
@@ -62,11 +62,13 @@ function LoginForm() {
             </div>
           </div>
           <button
+            disabled={isLoading}
             className="mt-4 text-white bg-[#260026] rounded-full w-2/3"
             type="submit"
           >
             Log in
           </button>
+          {error && <div className="error">{error}</div>}
         </form>
       </div>
     </>

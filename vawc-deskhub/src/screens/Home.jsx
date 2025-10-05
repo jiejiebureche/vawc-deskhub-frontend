@@ -1,7 +1,16 @@
+import { useLogout } from "../hooks/useLogout";
+
 function Home() {
-    return(
-        <div>home</div>
-    )
+  const { logout } = useLogout();
+  const handleLogout = () => {
+    logout();
+  };
+  return (
+    <>
+      <div>home</div>
+      <button onClick={handleLogout}>log out</button>
+    </>
+  );
 }
 
-export default Home
+export default Home;

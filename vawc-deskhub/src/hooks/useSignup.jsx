@@ -28,11 +28,11 @@ export const useSignup = () => {
       formData.append("contact_num", contact_num);
       formData.append("password", password);
       formData.append("role", "user");
-      formData.append("valid_id", valid_id); // 👈 the File object goes here
+      formData.append("valid_id", valid_id); 
 
-      const response = await fetch("http://localhost:3000/auth/signup", {
+      const response = await fetch(`${API_URL}/auth/signup`, {
         method: "POST",
-        body: formData, // 👈 don't set Content-Type, browser will handle it
+        body: formData, 
       });
 
       const json = await response.json();
