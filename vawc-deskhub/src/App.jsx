@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginForm from "./screens/LoginForm";
 import Home from "./screens/Home";
 import SignUpForm from "./screens/SignUpForm";
+import ErrorSection7 from "./screens/404NotFound";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignUpForm />} />
+          <Route path="*" element={<ErrorSection7 />} />
         </Routes>
       </BrowserRouter>
     </>

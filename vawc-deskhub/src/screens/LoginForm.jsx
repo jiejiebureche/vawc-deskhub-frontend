@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [contact_num, setContactNum] = useState("");
+  const [password, setUserPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -39,19 +39,21 @@ function LoginForm() {
             <hr className="my-8 border-gray-300 border-t-2 w-full mx-7" />
           </div>
           <div className="flex flex-col w-2/3">
-            <label className="field-label text-left mb-1">Email</label>
+            <label className="field-label text-left mb-1">Contact Number</label>
             <input
-              placeholder="Email"
+              placeholder="Contact Number"
               className="mt-1 p-2 border-1 border-solid border-gray-300 rounded-[7px]"
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              onChange={(e) => setContactNum(e.target.value)}
+              value={contact_num}
             />
             <label className="field-label text-left mt-5 mb-1">Password</label>
             <input
               placeholder="Password"
               className="mt-1 p-2 border-1 border-solid border-gray-300 rounded-[7px]"
               type="password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setUserPassword(e.target.value)}
+              value={password}
             />
             <div className="flex justify-end mt-4 text-xs">
               <Link to="/forgetpass" className="form-text">
