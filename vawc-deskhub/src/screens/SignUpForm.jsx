@@ -17,7 +17,9 @@ const SignUpForm = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
     // post user code here
+
     await signup(
       name,
       dob,
