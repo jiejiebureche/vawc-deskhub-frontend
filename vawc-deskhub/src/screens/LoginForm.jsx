@@ -1,6 +1,5 @@
 // import VAWCLogo from "../assets/looped.svg";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 
@@ -8,7 +7,6 @@ function LoginForm() {
   const [contact_num, setContactNum] = useState("");
   const [password, setUserPassword] = useState("");
   const { login, error, isLoading } = useLogin();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

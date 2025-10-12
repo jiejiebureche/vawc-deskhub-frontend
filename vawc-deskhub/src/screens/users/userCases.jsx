@@ -5,15 +5,16 @@ import ReportCard from "../../components/reportCard";
 export default function Cases() {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = user?.token;
+  const reporterId = user?.safeUser?.id;
 
   const {
     data: reports,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["reports"],
+    queryKey: ["reports", reporterId],
     queryFn: async () => {
-      const response = await fetch("/reports", {
+      const response = await fetch(`/reports/reporterId/${reporterId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) throw new Error("Failed to fetch");

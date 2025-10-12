@@ -6,6 +6,7 @@ import Home from "./screens/users/Home";
 import SignUpForm from "./screens/SignUpForm";
 import ErrorSection7 from "./screens/404NotFound";
 import Settings from "./screens/users/Settings";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -14,10 +15,35 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/cases" element={<Cases />} />
-          <Route path="/settings" element={<Settings />} />
+
+          <Route
+            path="/cases"
+            element={
+              <ProtectedRoute>
+                <Cases />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/signup" element={<SignUpForm />} />
           <Route path="*" element={<ErrorSection7 />} />
         </Routes>

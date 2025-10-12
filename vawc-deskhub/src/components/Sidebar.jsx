@@ -1,5 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, Navigate } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import {
   HomeIcon,
   BriefcaseIcon,
@@ -10,9 +12,13 @@ import {
 
 export default function Sidebar() {
   const { logout } = useLogout();
-  const handleLogout = () => logout();
+  const { user } = useContext(AuthContext);
+  //   console.log(user.safeUser.name)
+  const handleLogout = () => {
+    logout();
+    return <Navigate to="/" replace />;
+  };
   const location = useLocation();
-
   const isActive = (path) => location.pathname === path;
 
   return (
@@ -56,7 +62,7 @@ export default function Sidebar() {
               className="rounded-full w-10 h-10 flex-shrink-0"
             />
             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-              <p className="text-sm font-medium">Jhon Doe</p>
+              <p className="text-sm font-medium">{user?.safeUser?.name}</p>
             </div>
           </div>
         </div>
