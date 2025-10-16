@@ -26,10 +26,11 @@ export default function Sidebar() {
       role="navigation"
       aria-label="Sidebar"
       className="
-        fixed top-0 left-0 z-50
-        group group-hover:w-64 montserrat-font bg-[#260026] text-white flex flex-col justify-between
-        h-screen w-20 hover:w-64 transition-all duration-300 ease-in-out overflow-hidden
-      "
+    group
+    fixed top-0 left-0 z-50
+    montserrat-font bg-[#260026] text-white flex flex-col justify-between
+    h-screen w-20 hover:w-64 transition-all duration-300 ease-in-out overflow-hidden
+  "
     >
       {/* Top */}
       <div>

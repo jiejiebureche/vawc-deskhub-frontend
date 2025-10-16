@@ -8,7 +8,7 @@ const bgUrl = new URL("/src/assets/banner-bg.jpg", import.meta.url).href;
 export default function Home() {
   return (
     // note: parent has `group` so both sidebar and main respond to the same hover
-    <div className="montserrat-font flex min-h-screen group bg-gray-50">
+    <div className="montserrat-font flex min-h-screen bg-gray-50">
       <Sidebar />
 
       {/* main shifts right when the sidebar expands */}
