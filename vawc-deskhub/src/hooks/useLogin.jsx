@@ -28,7 +28,14 @@ export const useLogin = () => {
 
       localStorage.setItem("user", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
-      navigate("/");
+      const user = await json;
+      if (user?.safeUser?.role === "user") {
+        navigate("/");
+      } else if (user?.safeUser?.role === "agent") {
+        navigate("/dashboard");
+      } else {
+        console.error("You don't have access to this");
+      }
     } catch (err) {
       console.error("Login error:", err);
       setError(err.message || "Failed to connect to the server");
