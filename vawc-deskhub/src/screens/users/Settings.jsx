@@ -2,12 +2,15 @@ import React from "react";
 import Sidebar from "../../components/Sidebar";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
 
 const bgUrl = new URL("/src/assets/banner-bg.jpg", import.meta.url).href;
 
 export default function Settings() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useContext(AuthContext)
 
   const safeUser = user?.safeUser
 

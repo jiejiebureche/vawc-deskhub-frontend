@@ -11,6 +11,7 @@ import Settings from "./screens/users/Settings";
 import ProtectedRoute from "./ProtectedRoute";
 import RoleProtectedRoute from "./components/RoleProtectedRoute";
 import Unauthorized from "./Unauthorized";
+import RoleRedirect from "./components/roleRedirect";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,8 +20,20 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+
           <Route
             path="/"
+            element={
+              <ProtectedRoute>
+                <RoleProtectedRoute allowedRoles={["user", "agent"]}>
+                  <RoleRedirect />
+                </RoleProtectedRoute>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/home"
             element={
               <ProtectedRoute>
                 <RoleProtectedRoute allowedRoles={["user"]}>

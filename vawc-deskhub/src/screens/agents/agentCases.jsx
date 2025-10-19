@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import AdminSidebar from "../../components/AdminSidebar";
 import ReportCard from "../../components/reportCard";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function AgentCases() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useContext(AuthContext);
   const token = user?.token;
   const agentId = user?.safeUser?.id;
 

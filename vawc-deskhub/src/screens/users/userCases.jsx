@@ -2,9 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import Sidebar from "../../components/Sidebar";
 import ReportCard from "../../components/reportCard";
 import { ArrowPathIcon, FolderIcon } from "@heroicons/react/24/outline";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Cases() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useContext(AuthContext)
   const token = user?.token;
   const reporterId = user?.safeUser?.id;
 
