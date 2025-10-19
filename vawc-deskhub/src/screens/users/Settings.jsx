@@ -9,7 +9,7 @@ export default function Settings() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const safeUser = user?.safeUser
+  const safeUser = user?.safeUser;
 
   return (
     <div className="montserrat-font flex min-h-screen bg-gray-50">
@@ -19,20 +19,20 @@ export default function Settings() {
       {/* Main Content */}
       <main className="flex-1 relative bg-white overflow-auto">
         {/* Header Image */}
-        <div className="relative h-48 rounded-b-lg flex justify-center items-center">
+        <div className="relative h-64 md:h-72 flex justify-center items-center z-0">
           <img
             src={bgUrl}
             alt="Header Background"
-            className="absolute inset-0 w-full h-full object-cover rounded-b-lg"
+            className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-20 rounded-b-lg"></div>
-          <p className="relative z-10 text-white text-lg font-semibold drop-shadow">
+          <div className="absolute inset-0 bg-black/30"></div>
+          <p className="relative z-10 text-white text-2xl md:text-3xl font-semibold drop-shadow">
             Settings
           </p>
         </div>
 
         {/* Profile Section */}
-        <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-md p-8 -mt-16 relative z-10 m-8">
+        <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-md p-8 -mt-16 relative z-20 m-8">
           <div className="flex justify-between items-start mb-8">
             {/* Profile Info */}
             <div className="flex items-center space-x-4">
