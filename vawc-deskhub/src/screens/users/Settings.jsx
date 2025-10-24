@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
@@ -7,9 +7,66 @@ const bgUrl = new URL("/src/assets/banner-bg.jpg", import.meta.url).href;
 
 export default function Settings() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+  const safeUser = currentUser?.safeUser;
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState(safeUser);
+  // console.log(formData)
+  const API_URL = import.meta.env.VITE_API_URL;
 
-  const safeUser = user?.safeUser;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = async () => {
+    const userId = safeUser.id || safeUser._id;
+
+    try {
+      const response = await fetch(`${API_URL}/users/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update user.");
+      }
+
+      const updatedSafeUser = await response.json();
+
+      const updatedUserInStorage = {
+        ...currentUser,
+        safeUser: updatedSafeUser,
+      };
+
+      localStorage.setItem("user", JSON.stringify(updatedUserInStorage));
+      setCurrentUser(updatedUserInStorage);
+      setFormData(updatedSafeUser);
+      setIsEditing(false);
+
+      alert("Profile updated successfully!");
+    } catch (error) {
+      console.error("Error updating user:", error);
+      alert(`Error: ${error.message}`);
+    }
+  };
+
+  const handleCancel = () => {
+    // 1. Exit edit mode
+    setIsEditing(false);
+    // 2. Reset the form data back to the original, saved data
+    setFormData(safeUser);
+  };
 
   return (
     <div className="montserrat-font flex min-h-screen bg-gray-50">
@@ -42,6 +99,7 @@ export default function Settings() {
                 className="w-20 h-20 rounded-full object-cover border-2 border-gray-300"
               />
               <div>
+                {/* These will now update on save because they read from 'safeUser' */}
                 <h2 className="text-2xl font-semibold text-gray-800">
                   {safeUser.name}
                 </h2>
@@ -49,14 +107,38 @@ export default function Settings() {
               </div>
             </div>
 
-            {/* Edit Button */}
-            <button className="flex items-center gap-2 bg-purple-900 text-white font-medium py-2 px-4 rounded-md hover:bg-purple-800 transition">
-              <PencilIcon className="w-5 h-5" />
-              Edit
-            </button>
+            {/* 9. Conditional Edit/Save/Cancel Buttons */}
+            <div className="flex items-center gap-2">
+              {isEditing ? (
+                // Show Save and Cancel buttons if we ARE editing
+                <>
+                  <button
+                    onClick={handleCancel}
+                    className="bg-gray-500 text-white font-medium py-2 px-4 rounded-md hover:bg-gray-400 transition"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    className="bg-green-600 text-white font-medium py-2 px-4 rounded-md hover:bg-green-500 transition"
+                  >
+                    Save
+                  </button>
+                </>
+              ) : (
+                // Show Edit button if we are NOT editing
+                <button
+                  onClick={() => setIsEditing(true)} // Click to enter edit mode
+                  className="flex items-center gap-2 bg-purple-900 text-white font-medium py-2 px-4 rounded-md hover:bg-purple-800 transition"
+                >
+                  <PencilIcon className="w-5 h-5" />
+                  Edit
+                </button>
+              )}
+            </div>
           </div>
 
-          {/* Details Grid */}
+          {/* 10. Update Details Grid Inputs */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -64,9 +146,13 @@ export default function Settings() {
               </label>
               <input
                 type="text"
-                value={safeUser.name}
-                disabled
-                className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50"
+                name="name" // Add 'name' attribute
+                value={formData.name} // Read from 'formData' state
+                disabled={!isEditing} // Disable based on 'isEditing' state
+                onChange={handleInputChange} // Call handler on change
+                className={`w-full border border-gray-300 rounded-md px-3 py-2 ${
+                  isEditing ? "bg-white" : "bg-gray-50" // Conditional styling
+                }`}
               />
             </div>
 
@@ -76,9 +162,13 @@ export default function Settings() {
               </label>
               <input
                 type="text"
-                value={safeUser.contact_num}
-                disabled
-                className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50"
+                name="contact_num" // Add 'name' attribute
+                value={formData.contact_num} // Read from 'formData' state
+                disabled={!isEditing} // Disable based on 'isEditing' state
+                onChange={handleInputChange} // Call handler on change
+                className={`w-full border border-gray-300 rounded-md px-3 py-2 ${
+                  isEditing ? "bg-white" : "bg-gray-50"
+                }`}
               />
             </div>
 
@@ -88,9 +178,13 @@ export default function Settings() {
               </label>
               <input
                 type="text"
-                value={safeUser.barangayComplainant}
-                disabled
-                className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50"
+                name="barangayComplainant" // Add 'name' attribute
+                value={formData.barangayComplainant} // Read from 'formData' state
+                disabled={!isEditing} // Disable based on 'isEditing' state
+                onChange={handleInputChange} // Call handler on change
+                className={`w-full border border-gray-300 rounded-md px-3 py-2 ${
+                  isEditing ? "bg-white" : "bg-gray-50"
+                }`}
               />
             </div>
 
@@ -100,9 +194,13 @@ export default function Settings() {
               </label>
               <input
                 type="text"
-                value={safeUser.city}
-                disabled
-                className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50"
+                name="city" // Add 'name' attribute
+                value={formData.city} // Read from 'formData' state
+                disabled={!isEditing} // Disable based on 'isEditing' state
+                onChange={handleInputChange} // Call handler on change
+                className={`w-full border border-gray-300 rounded-md px-3 py-2 ${
+                  isEditing ? "bg-white" : "bg-gray-50"
+                }`}
               />
             </div>
 
@@ -112,9 +210,13 @@ export default function Settings() {
               </label>
               <input
                 type="text"
-                value={safeUser.gender || ""}
-                disabled
-                className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50"
+                name="gender" // Add 'name' attribute
+                value={formData.gender || ""} // Read from 'formData' state
+                disabled={!isEditing} // Disable based on 'isEditing' state
+                onChange={handleInputChange} // Call handler on change
+                className={`w-full border border-gray-300 rounded-md px-3 py-2 ${
+                  isEditing ? "bg-white" : "bg-gray-50"
+                }`}
               />
             </div>
           </div>
