@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
   const API_URL = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate()
 
   const signup = async (
     name,
@@ -40,9 +42,9 @@ export const useSignup = () => {
       if (!response.ok) {
         throw new Error(json.message || "Signup failed");
       }
-
-      localStorage.setItem("user", JSON.stringify(json));
+      // localStorage.setItem("user", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
+      navigate("/login")
     } catch (err) {
       console.error("Signup error:", err);
       setError(err.message || "Failed to connect to the server");
