@@ -45,9 +45,7 @@ const SignUpForm = () => {
     <>
       <div className="montserrat-font flex flex-col md:flex-row w-screen h-screen">
         {/* Left Side (Background Image) */}
-        <div className="h-1/3 md:h-full w-1/2">
-          <div className="flex h-full md:h-full w-screen bg-[url(./assets/signup-bg.jpg)] bg-cover bg-center bg-no-repeat"></div>
-        </div>
+        <div className="h-1/3 md:h-full w-full md:w-1/2 bg-[url(./assets/signup-bg.jpg)] bg-cover bg-center bg-no-repeat"></div>
 
         {/* Right Side (Form) */}
         <div className="flex flex-col bg-white h-full w-full md:w-1/2 items-center justify-center">
