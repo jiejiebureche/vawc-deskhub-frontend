@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import FileCaseModal from "./FileCaseModal";
 
 // Vite-safe way to reference an asset path
 const bgUrl = new URL("/src/assets/banner-bg.jpg", import.meta.url).href;
 
 export default function Home() {
+  // State to control modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     // note: parent has `group` so both sidebar and main respond to the same hover
     <div className="montserrat-font flex min-h-screen bg-gray-50">
@@ -61,9 +65,12 @@ export default function Home() {
           </div>
         </header>
 
-        {/* File a Case button (keeps above hero) */}
+        {/* File a Case button (triggers modal) */}
         <div className="absolute top-6 right-6 z-20">
-          <button className="flex items-center gap-2 bg-[#EB5757] text-white px-4 py-2 rounded-md shadow-md">
+          <button 
+            onClick={() => setIsModalOpen(true)} // Open the modal
+            className="flex items-center gap-2 bg-[#EB5757] text-white px-4 py-2 rounded-md shadow-md hover:bg-[#d44646] transition-colors"
+          >
             <PlusCircleIcon className="h-6 w-6" />
             <span>File a Case</span>
           </button>
@@ -74,6 +81,13 @@ export default function Home() {
           {/* placeholder for page content */}
           <div className="h-[800px]"></div>
         </section>
+
+        {/* Render the Modal */}
+        <FileCaseModal 
+            isOpen={isModalOpen} 
+            onClose={() => setIsModalOpen(false)} 
+        />
+        
       </main>
     </div>
   );

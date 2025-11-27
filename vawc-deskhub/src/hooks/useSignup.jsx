@@ -43,6 +43,7 @@ export const useSignup = () => {
         throw new Error(json.message || "Signup failed");
       }
       // localStorage.setItem("user", JSON.stringify(json));
+      alert("Profile updated successfully!");
       dispatch({ type: "LOGIN", payload: json });
       navigate("/login")
     } catch (err) {

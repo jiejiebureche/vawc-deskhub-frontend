@@ -11,6 +11,7 @@ import Settings from "./screens/users/Settings";
 import ProtectedRoute from "./ProtectedRoute";
 import RoleProtectedRoute from "./components/RoleProtectedRoute";
 import Unauthorized from "./Unauthorized";
+import ChangePass from "./screens/users/changePass";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -25,6 +26,17 @@ function App() {
               <ProtectedRoute>
                 <RoleProtectedRoute allowedRoles={["user"]}>
                   <Home />
+                </RoleProtectedRoute>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/change-password"
+            element={
+              <ProtectedRoute>
+                <RoleProtectedRoute allowedRoles={["user"]}>
+                  <ChangePass />
                 </RoleProtectedRoute>
               </ProtectedRoute>
             }
