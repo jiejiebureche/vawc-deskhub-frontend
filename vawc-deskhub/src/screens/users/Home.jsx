@@ -4,7 +4,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import FileCaseModal from "./FileCaseModal";
 
 // Vite-safe way to reference an asset path
-const bgUrl = new URL("/src/assets/banner-bg.jpg", import.meta.url).href;
+const bgUrl = new URL("/src/assets/homepage-banner.jpg", import.meta.url).href;
 
 export default function Home() {
   // State to control modal visibility
