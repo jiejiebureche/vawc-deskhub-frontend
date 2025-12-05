@@ -54,7 +54,7 @@ const SignUpForm = () => {
             className="login-form flex flex-col bg-white mt-3 w-full h-full rounded-[10px] text-[2.2vh] items-center justify-center-safe"
           >
             <p className="form-title mt-0 text-xl font-bold text-[#260026]">
-              Welcome to VAWC DeskHub!
+              Welcome to <span className="libre-baskerville-regular-italic font-bold">VAWC DeskHub!</span>
             </p>
             <div className="flex flex-row text-xs mb-4">
               <p className="form-text">Already have an account?&nbsp;</p>
