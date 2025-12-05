@@ -37,7 +37,7 @@ export default function Dashboard() {
   } = useQuery({
     queryKey: ["reports", agentId],
     queryFn: async () => {
-      const response = await fetch(`/reports/agent/${agentId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/reports/agent/${agentId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) throw new Error("Failed to fetch reports");
