@@ -206,24 +206,6 @@ export default function Settings() {
                         }`}
                     />
                 </div>
-
-                <div className="group/input">
-                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                        Gender
-                    </label>
-                    <input
-                        type="text"
-                        name="gender"
-                        value={formData.gender || ""}
-                        disabled={!isEditing}
-                        onChange={handleInputChange}
-                        className={`w-full border rounded-lg px-4 py-2.5 outline-none transition-all ${
-                        isEditing 
-                            ? "bg-white border-purple-200 focus:border-[#5b1b6f] focus:ring-2 focus:ring-purple-50" 
-                            : "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                        }`}
-                    />
-                </div>
             </div>
 
             {/* Change Password - Below inputs, Compact */}

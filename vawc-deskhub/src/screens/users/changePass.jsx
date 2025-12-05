@@ -81,9 +81,9 @@ export default function ChangePassword() {
 
       localStorage.setItem("user", JSON.stringify(json));
 
-      // if (dispatch) {
-      //   dispatch({ type: "LOGIN", payload: json });
-      // }
+      if (dispatch) {
+        dispatch({ type: "LOGIN", payload: json });
+      }
 
       setSuccess("Password changed successfully!");
       e.currentTarget.reset(); // Clear form fields

@@ -65,17 +65,6 @@ export default function AdminSidebar() {
           </div>
         </div>
 
-        {/* Search (only visible when expanded) */}
-        <div className="px-4 mt-3">
-          <div className="overflow-hidden max-h-0 group-hover:max-h-14 transition-all duration-300">
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full p-2 rounded-md text-black outline-none bg-white"
-            />
-          </div>
-        </div>
-
         {/* Nav */}
         <nav className="mt-6 px-2 space-y-1">
           <Link to="/dashboard" className="form-text">
