@@ -46,28 +46,23 @@ export default function Dashboard() {
     refetchInterval: 5000,
   });
 
-  // 2. Data Processing (FIXED LOGIC HERE)
+  // 2. Data Processing
   const stats = useMemo(() => {
     if (!reports.length) return null;
 
     const total = reports.length;
     
-    // --- FIX START ---
-    // Count specific statuses based on exact string matches
     const resolved = reports.filter(r => r.status === "resolved").length;
     const unopened = reports.filter(r => r.status === "unopened").length;
     
-    // Combine "pending" AND "opened" into "In Progress"
-    // This catches reports you just clicked ("opened") and ones you explicitly marked "pending"
     const inProgress = reports.filter(r => 
         r.status === "pending" || r.status === "opened"
     ).length;
-    // --- FIX END ---
 
     // Pie Chart Data
     const pieData = [
       { name: "Resolved", value: resolved, color: "#10B981" },
-      { name: "In Progress", value: inProgress, color: "#F59E0B" }, // Now uses the corrected count
+      { name: "In Progress", value: inProgress, color: "#F59E0B" },
       { name: "Unopened", value: unopened, color: "#EF4444" },
     ].filter(item => item.value > 0);
 
@@ -118,11 +113,12 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* Loading/Error States */}
+        {/* --- UPDATED LOADING STATE --- */}
         {isLoading && (
-          <div className="flex justify-center items-center h-64">
-             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#5b1b6f]"></div>
-          </div>
+        <div className="flex flex-col items-center justify-center py-20 text-gray-700">
+            <ArrowPathIcon className="w-8 h-8 md:w-10 md:h-10 text-[#5b1b6f] animate-spin mb-4" />
+            <p className="text-base md:text-lg font-medium">Loading dashboard analytics...</p>
+        </div>
         )}
 
         {isError && (
