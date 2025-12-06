@@ -17,9 +17,6 @@ const SignUpForm = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
-    // post user code here
-
     await signup(
       name,
       dob,
@@ -42,136 +39,153 @@ const SignUpForm = () => {
   };
 
   return (
-    <>
-      <div className="montserrat-font flex flex-col md:flex-row w-screen h-screen">
-        {/* Left Side (Background Image) */}
-        <div className="h-1/3 md:h-full w-full md:w-1/2 bg-[url(./assets/signup-bg.jpg)] bg-cover bg-center bg-no-repeat"></div>
-
-        {/* Right Side (Form) */}
-        <div className="flex flex-col bg-white h-full w-full md:w-1/2 items-center justify-center">
-          <form
-            onSubmit={handleSignup}
-            className="login-form flex flex-col bg-white mt-3 w-full h-full rounded-[10px] text-[2.2vh] items-center justify-center-safe"
-          >
-            <p className="form-title mt-0 text-xl font-bold text-[#260026]">
+    // Changed flex-col to flex-col-reverse on mobile so image is at bottom, form at top.
+    // On Desktop (md:), it's a row with the form on the left.
+    <div className="montserrat-font flex flex-col-reverse md:flex-row min-h-screen w-full bg-white">
+      
+      {/* Left Side (Form Container) */}
+      <div className="flex flex-col w-full md:w-1/2 items-center justify-center p-6 md:p-12 overflow-y-auto">
+        
+        <form
+          onSubmit={handleSignup}
+          className="w-full max-w-lg flex flex-col items-center bg-white"
+        >
+          {/* Header Section */}
+          <div className="text-center mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#260026]">
               Welcome to <span className="libre-baskerville-regular-italic font-bold">VAWC DeskHub!</span>
-            </p>
-            <div className="flex flex-row text-xs mb-4">
-              <p className="form-text">Already have an account?&nbsp;</p>
-              <Link to="/login" className="form-text">
+            </h2>
+            <div className="flex flex-row items-center justify-center text-sm mt-2 text-gray-600">
+              <p>Already have an account?&nbsp;</p>
+              <Link to="/login" className="text-[#260026] font-semibold hover:underline">
                 Log in
               </Link>
             </div>
-            <div className="flex flex-row items-center justify-center w-full mb-6">
-              <hr className="border-gray-300 border-t-2 w-full mx-7" />
-              <p className="form-title text-xl text-gray-400">OR</p>
-              <hr className="border-gray-300 border-t-2 w-full mx-7" />
+          </div>
+
+          {/* Divider */}
+          <div className="flex flex-row items-center justify-center w-full mb-6">
+            <hr className="border-gray-300 border-t w-full" />
+            <span className="mx-4 text-gray-400 font-medium">OR</span>
+            <hr className="border-gray-300 border-t w-full" />
+          </div>
+
+          {/* Input Fields Container */}
+          <div className="w-full space-y-4">
+            
+            {/* Name */}
+            <div className="flex flex-col">
+              <label className="text-sm font-semibold text-gray-700 mb-1">Name</label>
+              <input
+                placeholder="Full Name"
+                className="h-10 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#260026] focus:ring-1 focus:ring-[#260026]"
+                type="text"
+                onChange={(e) => setUserName(e.target.value)}
+                value={name}
+              />
             </div>
 
-            <div className="flex flex-col w-2/3 gap-4">
-              {/* Input Fields */}
+            {/* Grid Row: Contact & DOB */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col">
-                <label className="field-label text-left mb-1">Name</label>
+                <label className="text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
                 <input
-                  placeholder="Name"
-                  className="h-10 p-2 border border-gray-300 rounded-[7px]"
+                  placeholder="09XXXXXXXXX"
+                  className="h-10 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#260026]"
                   type="text"
-                  onChange={(e) => setUserName(e.target.value)}
-                  value={name}
+                  onChange={(e) => setContactNum(e.target.value)}
+                  value={contact_num}
                 />
               </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 w-full">
-                <div className="flex flex-col w-full">
-                  <label className="field-label text-left mb-1">
-                    Contact Number
-                  </label>
-                  <input
-                    placeholder="Contact Number"
-                    className="h-10 p-2 border border-gray-300 rounded-[7px]"
-                    type="text"
-                    onChange={(e) => setContactNum(e.target.value)}
-                    value={contact_num}
-                  />
-                </div>
-                <div className="flex flex-col w-full">
-                  <label className="field-label text-left mb-1">
-                    Date of Birth
-                  </label>
-                  <input
-                    placeholder="DOB"
-                    className="h-10 p-2 border border-gray-300 rounded-[7px] text-sm"
-                    type="date"
-                    onChange={(e) => setDOB(e.target.value)}
-                    value={dob}
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 w-full">
-                <div className="flex flex-col w-full">
-                  <label className="field-label text-left mb-1">City</label>
-                  <input
-                    placeholder="City"
-                    className="h-10 p-2 border border-gray-300 rounded-[7px]"
-                    type="text"
-                    onChange={(e) => setCity(e.target.value)}
-                    value={city}
-                  />
-                </div>
-                <div className="flex flex-col w-full">
-                  <label className="field-label text-left mb-1">Barangay</label>
-                  <input
-                    placeholder="Barangay"
-                    className="h-10 p-2 border border-gray-300 rounded-[7px]"
-                    type="text"
-                    onChange={(e) => setBarangay(e.target.value)}
-                    value={barangayComplainant}
-                  />
-                </div>
-              </div>
-
               <div className="flex flex-col">
-                <label className="field-label text-left mb-1">Password</label>
+                <label className="text-sm font-semibold text-gray-700 mb-1">Date of Birth</label>
                 <input
-                  placeholder="Password"
-                  className="h-10 p-2 border border-gray-300 rounded-[7px]"
-                  type="password"
-                  onChange={(e) => setUserPassword(e.target.value)}
-                  value={password}
+                  className="h-10 px-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#260026]"
+                  type="date"
+                  onChange={(e) => setDOB(e.target.value)}
+                  value={dob}
                 />
-              </div>
-
-              {/* Upload Valid ID */}
-              <div className="flex flex-col">
-                <label className="field-label text-left mb-1">Valid ID</label>
-                <label className="flex items-center justify-center gap-2 border border-gray-300 rounded-[7px] py-2 cursor-pointer hover:bg-gray-100 transition">
-                  <ArrowUpTrayIcon className="w-5 h-5 text-[#260026]" />
-                  <span className="text-sm text-[#260026]">
-                    {valid_id ? valid_id.name : "Upload Valid ID"}
-                  </span>
-                  <input
-                    type="file"
-                    accept=".jpg,.jpeg,.png"
-                    className="hidden"
-                    onChange={handleFileChange}
-                  />
-                </label>
               </div>
             </div>
 
-            <button
-              disabled={isLoading}
-              className="mt-6 bg-[#260026] rounded-full w-2/3 text-white py-2 hover:bg-[#3b003b] transition-all"
-              type="submit"
-            >
-              Sign Up
-            </button>
-            {error && <div className="error">{error}</div>}
-          </form>
-        </div>
+            {/* Grid Row: City & Barangay */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex flex-col">
+                <label className="text-sm font-semibold text-gray-700 mb-1">City</label>
+                <input
+                  placeholder="City"
+                  className="h-10 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#260026]"
+                  type="text"
+                  onChange={(e) => setCity(e.target.value)}
+                  value={city}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm font-semibold text-gray-700 mb-1">Barangay</label>
+                <input
+                  placeholder="Barangay"
+                  className="h-10 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#260026]"
+                  type="text"
+                  onChange={(e) => setBarangay(e.target.value)}
+                  value={barangayComplainant}
+                />
+              </div>
+            </div>
+
+            {/* Password */}
+            <div className="flex flex-col">
+              <label className="text-sm font-semibold text-gray-700 mb-1">Password</label>
+              <input
+                placeholder="Password"
+                className="h-10 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#260026]"
+                type="password"
+                onChange={(e) => setUserPassword(e.target.value)}
+                value={password}
+              />
+            </div>
+
+            {/* Upload Valid ID */}
+            <div className="flex flex-col">
+              <label className="text-sm font-semibold text-gray-700 mb-1">Valid ID</label>
+              <label className="flex items-center justify-center gap-2 border border-gray-300 border-dashed rounded-lg py-3 cursor-pointer hover:bg-gray-50 hover:border-[#260026] transition">
+                <ArrowUpTrayIcon className="w-5 h-5 text-[#260026]" />
+                <span className="text-sm text-gray-600 truncate max-w-[200px]">
+                  {valid_id ? valid_id.name : "Upload Valid ID"}
+                </span>
+                <input
+                  type="file"
+                  accept=".jpg,.jpeg,.png"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </label>
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            disabled={isLoading}
+            className="mt-8 bg-[#260026] rounded-full w-full py-3 text-white font-semibold shadow-md hover:bg-[#3b003b] hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            type="submit"
+          >
+            {isLoading ? "Creating Account..." : "Sign Up"}
+          </button>
+
+          {error && (
+            <div className="mt-4 p-3 w-full bg-red-50 text-red-600 border border-red-200 rounded text-sm text-center">
+              {error}
+            </div>
+          )}
+        </form>
       </div>
-    </>
+
+      {/* Right Side (Background Image with Overlay) */}
+      {/* Added relative and the overlay div */}
+      <div className="relative h-48 md:h-auto w-full md:w-1/2 bg-[url(./assets/signup-bg.jpg)] bg-cover bg-center bg-no-repeat flex-shrink-0">
+          {/* 🔹 Purple Overlay (Applied here) */}
+         <div className="absolute inset-0 bg-[#260026]/40"></div>
+      </div>
+    </div>
   );
 };
 

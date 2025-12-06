@@ -1,4 +1,3 @@
-// import VAWCLogo from "../assets/looped.svg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
@@ -15,58 +14,76 @@ function LoginForm() {
 
   return (
     <>
-      <div className="montserrat-font flex h-screen w-screen bg-[url(./assets/login-bg.jpg)] bg-cover bg-center bg-no-repeat items-center justify-center relative">
-        {/* 🔹 Overlay */}
+      {/* Main Container with Background and Overlay */}
+      <div className="montserrat-font flex min-h-screen w-full bg-[url(./assets/login-bg.jpg)] bg-cover bg-center bg-no-repeat items-center justify-center relative px-4">
+        {/* 🔹 Purple Overlay (Applied to match SignUp) */}
         <div className="absolute inset-0 bg-[#260026]/40"></div>
 
+        {/* 🔹 Form Container */}
         <form
           onSubmit={handleSubmit}
-          className="login-form flex flex-col bg-white w-3/4 h-3/5 sm:w-3/5 sm:h-2/3 md:w-2/3 md:h-3/5 lg:w-1/3 lg:h-2/3 text-[2.2vh] rounded-[10px] items-center justify-center-safe relative z-10"
+          className="relative z-10 w-full max-w-md flex flex-col bg-white rounded-xl shadow-2xl p-8 sm:p-10 items-center"
         >
-          {/* <img src={LoopedDefault} alt="Looped Logo" className="size-15" /> */}
-          <p className="form-title font-bold text-xl text-[#260026]">Login</p>
-          <div className="flex flex-row text-xs">
-            <p className="form-text">Don't have an account?&nbsp;</p>
-            <Link to="/signup" className="form-text">
+          {/* Header */}
+          <h2 className="text-2xl font-bold text-[#260026] mb-2">Login</h2>
+          
+          <div className="flex flex-row text-sm text-gray-600 mb-6">
+            <p>Don't have an account?&nbsp;</p>
+            <Link to="/signup" className="text-[#260026] font-semibold hover:underline">
               Sign up
             </Link>
           </div>
-          <div className="flex flex-row items-center justify-center w-full">
-            <hr className="my-8 border-gray-300 border-t-2 w-full mx-7" />
-            <p className="form-title text-xl text-gray-400">OR</p>
-            <hr className="my-8 border-gray-300 border-t-2 w-full mx-7" />
+
+          {/* Divider */}
+          <div className="flex items-center w-full mb-6">
+            <hr className="flex-1 border-gray-300" />
+            <span className="mx-4 text-gray-400 font-medium text-sm">OR</span>
+            <hr className="flex-1 border-gray-300" />
           </div>
-          <div className="flex flex-col w-2/3">
-            <label className="field-label text-left mb-1">Contact Number</label>
-            <input
-              placeholder="Contact Number"
-              className="mt-1 p-2 border-1 border-solid border-gray-300 rounded-[7px]"
-              type="text"
-              onChange={(e) => setContactNum(e.target.value)}
-              value={contact_num}
-            />
-            <label className="field-label text-left mt-5 mb-1">Password</label>
-            <input
-              placeholder="Password"
-              className="mt-1 p-2 border-1 border-solid border-gray-300 rounded-[7px]"
-              type="password"
-              onChange={(e) => setUserPassword(e.target.value)}
-              value={password}
-            />
-            <div className="flex justify-end mt-4 text-xs">
-              <Link to="/forgetpass" className="form-text">
-                Forget Password?
-              </Link>
+
+          {/* Input Fields Container */}
+          <div className="flex flex-col w-full space-y-4">
+            
+            <div className="flex flex-col">
+              <label className="text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
+              <input
+                placeholder="Contact Number"
+                className="h-10 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#260026] focus:ring-1 focus:ring-[#260026]"
+                type="text"
+                onChange={(e) => setContactNum(e.target.value)}
+                value={contact_num}
+              />
             </div>
+
+            <div className="flex flex-col">
+              <label className="text-sm font-semibold text-gray-700 mb-1">Password</label>
+              <input
+                placeholder="Password"
+                className="h-10 px-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#260026] focus:ring-1 focus:ring-[#260026]"
+                type="password"
+                onChange={(e) => setUserPassword(e.target.value)}
+                value={password}
+              />
+              {/* REMOVED "Forgot Password?" LINK */}
+            </div>
+
           </div>
+
+          {/* Submit Button */}
           <button
             disabled={isLoading}
-            className="mt-4 text-white bg-[#260026] rounded-full w-2/3"
+            className="mt-8 bg-[#260026] rounded-full w-full py-3 text-white font-semibold shadow-md hover:bg-[#3b003b] hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             type="submit"
           >
-            Log in
+            {isLoading ? "Logging in..." : "Log in"}
           </button>
-          {error && <div className="error">{error}</div>}
+
+          {/* Error Message */}
+          {error && (
+            <div className="mt-4 p-3 w-full bg-red-50 text-red-600 border border-red-200 rounded text-sm text-center">
+              {error}
+            </div>
+          )}
         </form>
       </div>
     </>
