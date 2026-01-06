@@ -50,7 +50,8 @@ export default function Cases() {
   // 2. Delete Mutation
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      const response = await fetch(`/reports/${id}`, {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/reports/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -70,7 +71,8 @@ export default function Cases() {
   // 3. Update Mutation
   const updateMutation = useMutation({
     mutationFn: async ({ id, updatedData }) => {
-      const response = await fetch(`/reports/${id}`, {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/reports/${id}`, {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",
