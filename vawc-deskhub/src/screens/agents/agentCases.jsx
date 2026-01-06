@@ -41,18 +41,20 @@ export default function AgentCases() {
   // 2. Patch Status Mutation
   const statusMutation = useMutation({
     mutationFn: async ({ id, newStatus }) => {
-      const response = await fetch(`/reports/${id}`, {
-        method: "PATCH",
-        headers: { 
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}` 
-        },
-        body: JSON.stringify({ status: newStatus }),
-      });
-      
-      if (!response.ok) throw new Error("Failed to update status");
-      return response.json();
-    },
+    // ✅ Add the API URL prefix here
+    const apiUrl = import.meta.env.VITE_API_URL || ''; 
+    const response = await fetch(`${apiUrl}/reports/${id}`, {
+      method: "PATCH",
+      headers: { 
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}` 
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+    
+    if (!response.ok) throw new Error("Failed to update status");
+    return response.json();
+  },
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries(["reports", agentId]);
       
