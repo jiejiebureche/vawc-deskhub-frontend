@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      "/reports": "http://localhost:3000",
+      "/reports": "https://vawc-deskhub-backend.onrender.com",
     },
   },
 });
