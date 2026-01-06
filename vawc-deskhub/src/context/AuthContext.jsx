@@ -25,7 +25,7 @@ export const AuthContextProvider = ({ children }) => {
     setLoading(false); // ✅ done loading after check
   }, []);
 
-  console.log("AuthContext state:", state);
+  // console.log("AuthContext state:", state);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch, loading }}>
